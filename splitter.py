@@ -14,11 +14,12 @@ from .utils import dataset_utils
 
 
 #################### Random split: K-fold cross validation ####################
-"""Generate indices or dataset slices in randomized K-fold splitting"""
-def k_fold_cross_validation(dataset: str,
-                            data_list: Optional[Iterable] = None,
-                            n_splits: int = 10,
-                            random_state: int = 0) -> Tuple[Iterable, Iterable, Iterable]:
+"""Obtain indices or dataset slices of one split in randomized K-fold splitting"""
+def one_in_k_fold_split(dataset:str,
+                        split_idx: int,
+                        n_splits: int,
+                        random_state: int, 
+                        data_list: Optional[Iterable] = None) -> Tuple[Iterable, Iterable, Iterable]:
     assert dataset in dataset_utils.random_split, f'{dataset} is not suitable for random split.'
 
     df = filtered_dataset(dataset)
@@ -26,15 +27,15 @@ def k_fold_cross_validation(dataset: str,
         assert len(data_list) == len(df), 'Length of `data_list` does not match filtered dataset.'
 
     skf = KFold(n_splits=n_splits, shuffle=True, random_state=random_state)
-    for train_idx, test_idx in skf.split(df):
-        test_size = 1 / (n_splits - 1)
-        train_idx, val_idx = train_test_split(train_idx, test_size=test_size, random_state=random_state)
-        if isinstance(data_list, pd.DataFrame):
-            yield data_list.iloc[train_idx], data_list.iloc[val_idx], data_list.iloc[test_idx]
-        elif data_list is not None:
-            yield data_list[train_idx], data_list[val_idx], data_list[test_idx]
-        else:
-            yield train_idx, val_idx, test_idx
+    train_idx, test_idx = list(skf.split(df))[split_idx]
+    train_idx, val_idx = train_test_split(train_idx, test_size=1 / (n_splits - 1), random_state=random_state)
+
+    if isinstance(data_list, pd.DataFrame):
+        return data_list.iloc[train_idx], data_list.iloc[val_idx], data_list.iloc[test_idx]
+    elif data_list is not None:
+        return data_list[train_idx], data_list[val_idx], data_list[test_idx]
+
+    return train_idx, val_idx, test_idx
 
 
 #################### Scaffold split: Deterministic & randomized ####################
