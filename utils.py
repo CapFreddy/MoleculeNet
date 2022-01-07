@@ -15,7 +15,7 @@ smiles_col = {
     for dataset in classification
 }
 
-task_col = {
+task_cols = {
     'bace': ['Class'],
     'bbbp': ['p_np'],
     'clintox': ['FDA_APPROVED', 'CT_TOX'],
@@ -276,6 +276,6 @@ dataset_utils = Box({
     'scaffold_split': scaffold_split,
     'random_split': random_split,
     'smiles_col': smiles_col,
-    'task_col': task_col,
+    'task_cols': task_cols,
     'raw_file': raw_file
 })

@@ -28,7 +28,9 @@ def k_fold_cross_validation(dataset: str,
     skf = KFold(n_splits=n_splits, shuffle=True, random_state=random_state)
     for train_idx, test_idx in skf.split(df):
         train_idx, val_idx = train_test_split(train_idx, test_size=1/9, random_state=random_state)
-        if data_list is not None:
+        if isinstance(data_list, pd.DataFrame):
+            yield data_list.iloc[train_idx], data_list.iloc[val_idx], data_list.iloc[test_idx]
+        elif data_list is not None:
             yield data_list[train_idx], data_list[val_idx], data_list[test_idx]
         else:
             yield train_idx, val_idx, test_idx
@@ -73,7 +75,9 @@ def scaffold_split(dataset: str, data_list: Optional[Iterable] = None) \
         else:
             train_idx.extend(scaffold_set)
 
-    if data_list is not None:
+    if isinstance(data_list, pd.DataFrame):
+        return data_list.iloc[train_idx], data_list.iloc[val_idx], data_list.iloc[test_idx]
+    elif data_list is not None:
         return data_list[train_idx], data_list[val_idx], data_list[test_idx]
 
     return train_idx, val_idx, test_idx
@@ -115,7 +119,9 @@ def randomized_scaffold_split(dataset: str, data_list: Optional[Iterable] = None
         else:
             train_idx.extend(scaffold_set)
 
-    if data_list is not None:
+    if isinstance(data_list, pd.DataFrame):
+        return data_list.iloc[train_idx], data_list.iloc[val_idx], data_list.iloc[test_idx]
+    elif data_list is not None:
         return data_list[train_idx], data_list[val_idx], data_list[test_idx]
 
     return train_idx, val_idx, test_idx
