@@ -1,12 +1,19 @@
 from box import Box
 
 
-"""Dataset"""
+"""Task type"""
 classification = ['bace', 'bbbp', 'clintox', 'sider', 'tox21', 'toxcast', 'hiv', 'muv']
 dataset = classification
 
+
+"""Recommended splitting"""
 scaffold_split = ['bace', 'bbbp', 'hiv']
 random_split = ['clintox', 'sider', 'tox21', 'toxcast', 'muv']
+
+
+"""Recommended metric"""
+roc = ['bace', 'bbbp', 'clintox', 'sider', 'tox21', 'toxcast', 'hiv']
+prc = ['muv']
 
 
 """DataFrame column"""
@@ -257,7 +264,7 @@ task_cols = {
 }
 
 
-"""File"""
+"""Raw file name"""
 raw_file = {
     'bace': 'bace.csv',
     'bbbp': 'BBBP.csv',
@@ -275,6 +282,8 @@ dataset_utils = Box({
     'classification': classification,
     'scaffold_split': scaffold_split,
     'random_split': random_split,
+    'roc': roc,
+    'prc': prc,
     'smiles_col': smiles_col,
     'task_cols': task_cols,
     'raw_file': raw_file
