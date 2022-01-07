@@ -7,8 +7,8 @@ dataset = classification
 
 
 """Recommended splitting"""
-scaffold_split = ['bace', 'bbbp', 'hiv']
 random_split = ['clintox', 'sider', 'tox21', 'toxcast', 'muv']
+scaffold_split = ['bace', 'bbbp', 'hiv']
 
 
 """Recommended metric"""
