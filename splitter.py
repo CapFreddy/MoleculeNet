@@ -80,7 +80,7 @@ def scaffold_split(dataset: str, data_list: Optional[Iterable] = None) \
 
 
 """Randomized scaffold split"""
-def random_scaffold_split(dataset: str, data_list: Optional[Iterable] = None, random_state: int = 0) \
+def randomized_scaffold_split(dataset: str, data_list: Optional[Iterable] = None, random_state: int = 0) \
                           -> Tuple[Iterable, Iterable, Iterable]:
     assert dataset in dataset_utils.scaffold_split, f'{dataset} is not suitable for scaffold split.'
 
