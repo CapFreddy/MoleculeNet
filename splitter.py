@@ -27,7 +27,8 @@ def k_fold_cross_validation(dataset: str,
 
     skf = KFold(n_splits=n_splits, shuffle=True, random_state=random_state)
     for train_idx, test_idx in skf.split(df):
-        train_idx, val_idx = train_test_split(train_idx, test_size=1/9, random_state=random_state)
+        test_size = 1 / (n_splits - 1)
+        train_idx, val_idx = train_test_split(train_idx, test_size=test_size, random_state=random_state)
         if isinstance(data_list, pd.DataFrame):
             yield data_list.iloc[train_idx], data_list.iloc[val_idx], data_list.iloc[test_idx]
         elif data_list is not None:
