@@ -275,8 +275,6 @@ dataset_utils = Box({
     'classification': classification,
     'scaffold_split': scaffold_split,
     'random_split': random_split,
-    'roc': roc,
-    'prc': prc,
     'smiles_col': smiles_col,
     'task_cols': task_cols,
     'raw_file': raw_file
