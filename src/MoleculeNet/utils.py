@@ -3,7 +3,6 @@ from box import Box
 
 """Task type"""
 classification = ['bace', 'bbbp', 'clintox', 'sider', 'tox21', 'toxcast', 'hiv', 'muv']
-dataset = classification
 
 
 """Recommended splitting"""
@@ -278,7 +277,6 @@ raw_file = {
 
 
 dataset_utils = Box({
-    'dataset': dataset,
     'classification': classification,
     'scaffold_split': scaffold_split,
     'random_split': random_split,

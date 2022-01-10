@@ -4,6 +4,9 @@ from rdkit import Chem
 from rdkit.Chem.Scaffolds import MurckoScaffold
 from sklearn.model_selection import train_test_split, KFold
 
+from dgl.data.utils import Subset
+from dgllife.data import MoleculeCSVDataset
+
 import os
 import os.path as osp
 from collections import defaultdict
@@ -11,6 +14,19 @@ from collections import defaultdict
 from typing import Tuple, Iterable, Optional
 
 from .utils import dataset_utils
+
+
+"""Interface API"""
+def train_val_test_split(dataset: str,
+                         split_idx: int,
+                         n_splits: int,
+                         random_state: int, 
+                         data_list: Optional[Iterable] = None) -> Tuple[Iterable, Iterable, Iterable]:
+    if dataset in dataset_utils.random_split:
+        return one_in_k_fold_split(dataset, split_idx, n_splits, random_state, data_list)
+
+    assert dataset in dataset_utils.scaffold_split
+    return randomized_scaffold_split(dataset, random_state, data_list)
 
 
 #################### Random split: K-fold cross validation ####################
@@ -32,6 +48,8 @@ def one_in_k_fold_split(dataset:str,
 
     if isinstance(data_list, pd.DataFrame):
         return data_list.iloc[train_idx], data_list.iloc[val_idx], data_list.iloc[test_idx]
+    elif isinstance(data_list, MoleculeCSVDataset):
+        return Subset(data_list, train_idx), Subset(data_list, val_idx), Subset(data_list, test_idx)
     elif data_list is not None:
         return data_list[train_idx], data_list[val_idx], data_list[test_idx]
 
@@ -79,6 +97,8 @@ def scaffold_split(dataset: str, data_list: Optional[Iterable] = None) \
 
     if isinstance(data_list, pd.DataFrame):
         return data_list.iloc[train_idx], data_list.iloc[val_idx], data_list.iloc[test_idx]
+    elif isinstance(data_list, MoleculeCSVDataset):
+        return Subset(data_list, train_idx), Subset(data_list, val_idx), Subset(data_list, test_idx)
     elif data_list is not None:
         return data_list[train_idx], data_list[val_idx], data_list[test_idx]
 
@@ -123,6 +143,8 @@ def randomized_scaffold_split(dataset: str, random_state: int, data_list: Option
 
     if isinstance(data_list, pd.DataFrame):
         return data_list.iloc[train_idx], data_list.iloc[val_idx], data_list.iloc[test_idx]
+    elif isinstance(data_list, MoleculeCSVDataset):
+        return Subset(data_list, train_idx), Subset(data_list, val_idx), Subset(data_list, test_idx)
     elif data_list is not None:
         return data_list[train_idx], data_list[val_idx], data_list[test_idx]
 
