@@ -10,11 +10,6 @@ random_split = ['clintox', 'sider', 'tox21', 'toxcast', 'muv']
 scaffold_split = ['bace', 'bbbp', 'hiv']
 
 
-"""Recommended metric"""
-roc = ['bace', 'bbbp', 'clintox', 'sider', 'tox21', 'toxcast', 'hiv']
-prc = ['muv']
-
-
 """DataFrame column"""
 smiles_col = {
     dataset: 'mol' if dataset == 'bace' else 'smiles'
