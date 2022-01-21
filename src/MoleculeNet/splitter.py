@@ -59,7 +59,7 @@ def one_in_k_fold_split(dataset:str,
 #################### Scaffold split: Deterministic & randomized ####################
 """Deterministic scaffold split"""
 def scaffold_split(dataset: str, data_list: Optional[Iterable] = None) \
-                   -> Tuple[Iterable, Iterable, Iterable]:
+                  -> Tuple[Iterable, Iterable, Iterable]:
     assert dataset in dataset_utils.scaffold_split, f'{dataset} is not suitable for scaffold split.'
 
     df = filtered_dataset(dataset)
@@ -107,7 +107,7 @@ def scaffold_split(dataset: str, data_list: Optional[Iterable] = None) \
 
 """Randomized scaffold split"""
 def randomized_scaffold_split(dataset: str, random_state: int, data_list: Optional[Iterable] = None) \
-                              -> Tuple[Iterable, Iterable, Iterable]:
+                             -> Tuple[Iterable, Iterable, Iterable]:
     assert dataset in dataset_utils.scaffold_split, f'{dataset} is not suitable for scaffold split.'
 
     df = filtered_dataset(dataset)

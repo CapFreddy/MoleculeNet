@@ -1,2 +1,2 @@
 # MoleculeNet
-Benchmarking MoleculeNet
+Unified splits for MoleculeNet datasets
